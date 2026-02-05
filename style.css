@@ -1,0 +1,977 @@
+/* ===============================
+   CSS RESET & BASE
+================================ */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #0b0b0e;
+  color: #e6e6eb;
+  line-height: 1.6;
+  overflow-x: hidden;
+}
+
+/* ===============================
+   THEME VARIABLES
+================================ */
+:root {
+  --bg-primary: #0b0b0e;
+  --bg-secondary: #121218;
+  --bg-card: #17171f;
+
+  --text-primary: #ffffff;
+  --text-secondary: #b8b8c7;
+
+  --accent: #ff3b3b;          /* Cinematic Red */
+  --accent-soft: rgba(255, 59, 59, 0.15);
+
+  --border: rgba(255, 255, 255, 0.08);
+
+  --radius: 14px;
+  --radius-sm: 10px;
+
+  --transition: 0.3s ease;
+}
+
+/* ===============================
+   GLOBAL ELEMENTS
+================================ */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  width: 100%;
+  display: block;
+}
+
+section {
+  padding: 90px 0;
+}
+
+/* ===============================
+   LAYOUT UTILITIES
+================================ */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+
+.section-header {
+  max-width: 600px;
+  margin-bottom: 50px;
+}
+
+.section-header h2 {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  font-weight: 700;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+}
+
+.section-header p {
+  color: var(--text-secondary);
+  font-size: 1rem;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.btn {
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 59, 59, 0.35);
+}
+
+.btn-secondary {
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.btn-secondary:hover {
+  background: var(--bg-card);
+  border-color: var(--accent);
+}
+/* ===============================
+   HEADER / NAVBAR
+================================ */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: rgba(11, 11, 14, 0.75);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 72px;
+}
+
+.logo {
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: var(--text-primary);
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+}
+
+.nav-links a {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  position: relative;
+  transition: var(--transition);
+}
+
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: var(--transition);
+}
+
+.nav-links a:hover {
+  color: var(--text-primary);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Hide nav links on small devices (clean look) */
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+}
+
+/* ===============================
+   HERO SECTION
+================================ */
+.hero {
+  min-height: calc(100vh - 72px);
+  display: flex;
+  align-items: center;
+  background:
+    radial-gradient(circle at 30% 20%, rgba(255, 59, 59, 0.15), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(255, 59, 59, 0.08), transparent 40%);
+}
+
+.hero-content {
+  max-width: 720px;
+  animation: fadeUp 1s ease forwards;
+}
+
+.hero h1 {
+  font-size: clamp(2.2rem, 4vw, 3.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 20px;
+  color: var(--text-primary);
+}
+
+.hero h1 span {
+  color: var(--accent);
+}
+
+.hero p {
+  font-size: 1.05rem;
+  color: var(--text-secondary);
+  margin-bottom: 35px;
+  max-width: 600px;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+/* ===============================
+   HERO ANIMATION
+================================ */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===============================
+   HERO RESPONSIVE
+================================ */
+@media (max-width: 600px) {
+  .hero {
+    padding-top: 40px;
+  }
+
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 0.95rem;
+  }
+}
+/* ===============================
+   PORTFOLIO SECTION
+================================ */
+/* Grid Layout — 2 cards per column, wider look */
+
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+  gap: 30px;
+  align-items: start;
+}
+
+/* Card */
+.portfolio-card {
+  background: var(--bg-card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hover */
+.portfolio-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+  box-shadow: 0 18px 35px rgba(0,0,0,0.35);
+}
+
+/* VIDEO BIGGER */
+.video-wrapper {
+  position: relative;
+  padding-top: 60%; /* makes video visually bigger */
+  background: #000;
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* Compact Info */
+.portfolio-info {
+  padding: 12px 14px 14px;
+}
+
+.portfolio-info h3 {
+  font-size: 0.95rem;
+  margin: 6px 0 4px;
+  line-height: 1.3;
+}
+
+.portfolio-info p {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* Platform badge smaller */
+.platform {
+  font-size: 0.65rem;
+  padding: 3px 8px;
+}
+
+
+/* Mobile Tweaks */
+@media (max-width: 700px) {
+  .portfolio-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .video-wrapper {
+    padding-top: 56.25%;
+  }
+}
+
+
+/* ===============================
+   SERVICES SECTION (Premium Upgrade)
+================================ */
+.services {
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated Gradient Blobs Behind Section */
+.services::before,
+.services::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(120px);
+  animation: floatBlob 20s ease-in-out infinite;
+}
+
+.services::before {
+  background: linear-gradient(135deg, #ff4d4d, #ff784d);
+  top: -100px;
+  left: -150px;
+}
+
+.services::after {
+  background: linear-gradient(135deg, #784dff, #4d9eff);
+  bottom: -120px;
+  right: -180px;
+  animation-delay: 10s; /* desync for smooth motion */
+}
+
+/* Floating Animation Keyframes */
+@keyframes floatBlob {
+  0% { transform: translate(0,0) scale(1); opacity:0.15; }
+  25% { transform: translate(30px,-20px) scale(1.1); opacity:0.18; }
+  50% { transform: translate(-20px,30px) scale(1.05); opacity:0.15; }
+  75% { transform: translate(10px,-25px) scale(1.1); opacity:0.18; }
+  100% { transform: translate(0,0) scale(1); opacity:0.15; }
+}
+
+/* Grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Service Card */
+.service-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: var(--transition);
+  z-index: 1;
+}
+
+/* Blurred Background Image Layer */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/images/service-bg.jpg'); /* replace with your blurred image */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  filter: blur(10px);
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+/* Animated Gradient Overlay Layer */
+.service-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff4d4d, #784dff, #4d9eff, #ff784d);
+  background-size: 400% 400%;
+  opacity: 0.05;
+  z-index: 0;
+  pointer-events: none;
+  animation: gradientShift 12s ease infinite;
+  transition: var(--transition);
+}
+
+/* Hover Effects */
+.service-card:hover::before {
+  opacity: 0.12;
+}
+.service-card:hover::after {
+  opacity: 0.15;
+  filter: blur(12px) brightness(1.1);
+}
+.service-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55),
+              0 0 30px rgba(255,80,80,0.18);
+  z-index: 10;
+}
+
+/* Gradient Shift Animation */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Text Styling */
+.service-card h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 14px;
+  color: var(--text-primary);
+  position: relative;
+  z-index: 1;
+}
+
+.service-card p {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile Spacing */
+@media (max-width: 600px) {
+  .service-card {
+    padding: 22px;
+  }
+}
+
+/* ===============================
+   ABOUT SECTION (Enhanced Cinematic)
+================================ */
+/* Title */
+.about {
+  background: var(--bg-secondary);
+  padding: 90px 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Main layout */
+.about-wrapper {
+  max-width: 1200px;
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1.3fr 0.7fr;
+  align-items: center;
+  gap: 70px;
+  position: relative;
+  z-index: 1;
+}
+
+/* LEFT */
+.about-left h2 {
+  font-size: 2.4rem;
+  margin-bottom: 22px;
+  color: var(--text-primary);
+}
+
+.about-left p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+.about-left .lead {
+  font-size: 1.1rem;
+  color: var(--text-primary);
+}
+
+/* STATS */
+.about-stats {
+  display: flex;
+  gap: 40px;
+  margin-top: 30px;
+}
+
+.stat h3 {
+  font-size: 1.8rem;
+  background: linear-gradient(90deg, #ff4d4d, #784dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.stat span {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+/* RIGHT IMAGE */
+.about-right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.about-right img {
+  width: 100%;
+  max-width: 340px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: 0 25px 60px rgba(0,0,0,0.55);
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+
+.about-right img:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 35px 80px rgba(0,0,0,0.7);
+}
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .about-wrapper {
+    grid-template-columns: 1fr;
+    gap: 50px;
+    text-align: center;
+  }
+
+  .about-right {
+    justify-content: center;
+  }
+
+  .about-stats {
+    justify-content: center;
+  }
+}
+
+
+
+/* ===============================
+   SOCIAL PROOF SECTION - Cinematic Upgrade
+================================ */
+.social-proof {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-primary);
+  padding: 80px 20px;
+}
+
+/* Floating Glows Behind Section */
+.social-proof::before,
+.social-proof::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
+  z-index: 0;
+  pointer-events: none;
+  filter: blur(120px);
+  opacity: 0.15;
+  animation: floatBlob 20s ease-in-out infinite;
+}
+
+.social-proof::before {
+  top: -100px;
+  left: -120px;
+  background: radial-gradient(circle, rgba(255,77,77,0.18), transparent 70%);
+}
+
+.social-proof::after {
+  bottom: -100px;
+  right: -150px;
+  background: radial-gradient(circle, rgba(120,100,255,0.15), transparent 70%);
+  animation-delay: 10s;
+}
+
+/* Grid Layout */
+.social-proof-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Proof Card Styling */
+.proof-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: var(--transition);
+  z-index: 1;
+}
+
+/* Blurred Background Layer */
+.proof-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/images/proof-bg.jpg'); /* replace with subtle blurred texture */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.08;
+  filter: blur(10px);
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+/* Animated Gradient Overlay */
+.proof-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff4d4d, #784dff, #4d9eff, #ff784d);
+  background-size: 400% 400%;
+  opacity: 0.05;
+  z-index: 0;
+  pointer-events: none;
+  animation: gradientShift 12s ease infinite;
+}
+
+/* Hover Effects */
+.proof-card:hover::before {
+  opacity: 0.12;
+}
+.proof-card:hover::after {
+  opacity: 0.15;
+  filter: blur(12px) brightness(1.1);
+}
+.proof-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: var(--accent);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55),
+              0 0 30px rgba(255,80,80,0.18);
+  z-index: 10;
+}
+
+/* Text Styling */
+.channel-name {
+  font-weight: 600;
+  margin-bottom: 10px;
+  color: var(--text-primary);
+  background: linear-gradient(90deg, #ff4d4d, #784dff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.proof-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  position: relative;
+  z-index: 1;
+}
+
+/* Floating Blob Animation Keyframes (reuse) */
+@keyframes floatBlob {
+  0% { transform: translate(0,0) scale(1); opacity:0.15; }
+  25% { transform: translate(25px,-20px) scale(1.1); opacity:0.18; }
+  50% { transform: translate(-20px,30px) scale(1.05); opacity:0.15; }
+  75% { transform: translate(10px,-25px) scale(1.1); opacity:0.18; }
+  100% { transform: translate(0,0) scale(1); opacity:0.15; }
+}
+
+/* Gradient Shift Animation (reuse) */
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .social-proof-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .proof-card {
+    padding: 22px;
+  }
+  .proof-text {
+    font-size: 0.9rem;
+  }
+}
+
+/* ===============================
+   PREMIUM BUTTONS
+================================ */
+.btn-primary {
+  background: linear-gradient(135deg,#ff4d4d,#ff784d);
+  box-shadow: 0 10px 35px rgba(255,80,80,0.3);
+}
+
+.btn-primary:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 15px 50px rgba(255,80,80,0.45);
+}
+
+/* ===============================
+   SECTION REVEAL (All Sections)
+================================ */
+section {
+  animation: sectionFade 1s ease forwards;
+}
+
+@keyframes sectionFade {
+  from { opacity: 0; transform: translateY(40px);}
+  to { opacity: 1; transform: translateY(0);}
+}
+
+/* ===============================
+   SERVICE CARD CINEMATIC BACKGROUND
+================================ */
+.service-card {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  transition: var(--transition);
+  z-index: 1;
+}
+
+/* Background Image Layer */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url('assets/images/bg\ service.png'); /* Replace with your blur image */
+  background-size: cover;
+  background-position: center;
+  opacity: 0.78; /* subtle depth */
+  filter: blur(10px);
+  z-index: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+}
+
+/* Hover: Slightly increase brightness/depth */
+.service-card:hover::after {
+  opacity: 0.15;
+  filter: blur(12px) brightness(1.1);
+}
+/* ===============================
+   SERVICES SECTION CINEMATIC BACKGROUND
+================================ */
+.services {
+  background: var(--bg-primary);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated Gradient Blobs */
+.services::before,
+.services::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  width: 400px;
+  height: 400px;
+  opacity: 0.15;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(120px);
+  animation: floatBlob 20s ease-in-out infinite;
+}
+
+.services::before {
+  background: linear-gradient(135deg, #ff4d4d, #ff784d);
+  top: -100px;
+  left: -150px;
+}
+
+.services::after {
+  background: linear-gradient(135deg, #784dff, #4d9eff);
+  bottom: -120px;
+  right: -180px;
+  animation-delay: 10s; /* desync for smooth motion */
+}
+
+/* Floating Animation Keyframes */
+@keyframes floatBlob {
+  0% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+  25% {
+    transform: translate(30px, -20px) scale(1.1);
+    opacity: 0.18;
+  }
+  50% {
+    transform: translate(-20px, 30px) scale(1.05);
+    opacity: 0.15;
+  }
+  75% {
+    transform: translate(10px, -25px) scale(1.1);
+    opacity: 0.18;
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+    opacity: 0.15;
+  }
+}
+
+
+/* ===============================
+   FLOATING ANIMATION
+================================ */
+@keyframes floatGlow {
+  0% { transform: translate(0,0) scale(1); opacity:0.6;}
+  50% { transform: translate(-40px,30px) scale(1.1); opacity:0.85;}
+  100% { transform: translate(0,0) scale(1); opacity:0.6;}
+}
+
+@keyframes floatSmall {
+  0% { transform: translate(0,0); opacity:0.5;}
+  50% { transform: translate(25px,20px); opacity:0.8;}
+  100% { transform: translate(0,0); opacity:0.5;}
+}
+/* ===============================
+   CONTACT SECTION
+================================ */
+.contact {
+  background: var(--bg-secondary);
+  position: relative;
+  overflow: hidden;
+  padding: 60px 20px;
+}
+
+/* Animated Background Glow */
+.contact::before {
+  content: "";
+  position: absolute;
+  top: -150px;
+  right: -150px;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(255,80,80,0.08), transparent 70%);
+  animation: floatGlow 12s ease-in-out infinite;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Grid Layout for Contact Links */
+.contact-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* Individual Contact Card */
+.contact-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  transition: var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Gradient Accent Overlay */
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,77,77,0.15), rgba(120,100,255,0.12));
+  opacity: 0;
+  transition: var(--transition);
+  z-index: 0;
+}
+
+.contact-card:hover::before {
+  opacity: 1;
+  filter: blur(10px);
+}
+
+/* Hover Lift & Shadow */
+.contact-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.55),
+              0 0 30px rgba(255,80,80,0.18);
+  border-color: var(--accent);
+  z-index: 10;
+}
+
+/* Contact Text */
+.contact-card span {
+  display: block;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
+  position: relative;
+  z-index: 1;
+}
+
+.contact-card p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  position: relative;
+  z-index: 1;
+}
+
+/* Mobile Responsive */
+@media (max-width: 600px) {
+  .contact {
+    padding: 40px 15px;
+  }
+
+  .contact-card {
+    padding: 20px;
+  }
+
+  .contact-card p {
+    font-size: 0.95rem;
+  }
+}
+
